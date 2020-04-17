@@ -30,5 +30,5 @@ String URL = prop.getProperty("URL", "jdbc:sqlserver://localhost:1433;databaseNa
         } catch (Exception e) {
             e.printStackTrace();
         }
-    }
+    }//
 }
