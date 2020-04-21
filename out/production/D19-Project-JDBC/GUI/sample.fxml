@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.Cursor?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.paint.LinearGradient?>
+<?import javafx.scene.paint.RadialGradient?>
+<?import javafx.scene.paint.Stop?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane prefHeight="676.0" prefWidth="1067.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Domain.Controller">
+   <children>
+      <AnchorPane prefHeight="676.0" prefWidth="286.0" style="-fx-background-color: #2e7d32;">
+         <children>
+            <Label contentDisplay="CENTER" layoutX="20.0" layoutY="14.0" prefHeight="85.0" prefWidth="247.0" text="ECCO Canteen">
+               <font>
+                  <Font name="Dubai Medium" size="40.0" />
+               </font>
+               <textFill>
+                  <RadialGradient centerX="0.5" centerY="0.5" radius="0.5">
+                     <stops>
+                        <Stop color="#c0ecff" />
+                        <Stop color="WHITE" offset="1.0" />
+                     </stops>
+                  </RadialGradient>
+               </textFill>
+            </Label>
+            <Label fx:id="drinksLabel" layoutX="142.0" layoutY="228.0" onMousePressed="#showDrinks" text="Drinks" textFill="WHITE">
+               <font>
+                  <Font name="Dubai Medium" size="30.0" />
+               </font>
+            </Label>
+            <Label fx:id="statisticLabel" layoutX="121.0" layoutY="596.0" onMousePressed="#showStatistics" text="Statistics" textFill="WHITE">
+               <font>
+                  <Font name="Dubai Medium" size="32.0" />
+               </font>
+            </Label>
+            <Label fx:id="foodLabel" layoutX="142.0" layoutY="126.0" onMousePressed="#showFood" prefHeight="54.0" prefWidth="71.0" text="Food" textFill="WHITE">
+               <font>
+                  <Font name="Dubai Medium" size="30.0" />
+               </font>
+            </Label>
+            <ImageView fitHeight="71.0" fitWidth="82.0" layoutX="25.0" layoutY="117.0" onMousePressed="#showFood" opacity="0.76" pickOnBounds="true" preserveRatio="true">
+               <cursor>
+                  <Cursor fx:constant="DEFAULT" />
+               </cursor>
+               <image>
+                  <Image url="@../Pictures/food_64px.png" />
+               </image>
+            </ImageView>
+            <ImageView fitHeight="71.0" fitWidth="82.0" layoutX="25.0" layoutY="220.0" onMousePressed="#showDrinks" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../Pictures/soda_water_64px.png" />
+               </image>
+            </ImageView>
+            <ImageView fitHeight="71.0" fitWidth="82.0" layoutX="25.0" layoutY="589.0" onMousePressed="#showStatistics" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../Pictures/statistics_80px.png" />
+               </image>
+            </ImageView>
+            <Label fx:id="balanceLabel" layoutX="106.0" layoutY="458.0" onMousePressed="#showBalance" text="Add Balance" textFill="WHITE">
+               <font>
+                  <Font name="Dubai Medium" size="30.0" />
+               </font>
+            </Label>
+            <ImageView fitHeight="71.0" fitWidth="82.0" layoutX="25.0" layoutY="450.0" onMousePressed="#showBalance" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../Pictures/payment_history_24px.png" />
+               </image>
+            </ImageView>
+            <Label layoutX="23.0" layoutY="357.0" text="Reception">
+               <font>
+                  <Font name="Dubai Medium" size="40.0" />
+               </font>
+               <textFill>
+                  <LinearGradient endX="1.0" endY="1.0">
+                     <stops>
+                        <Stop color="#b3fff5" />
+                        <Stop color="WHITE" offset="1.0" />
+                     </stops>
+                  </LinearGradient>
+               </textFill>
+            </Label>
+         </children>
+      </AnchorPane>
+      <AnchorPane layoutX="286.0" prefHeight="59.0" prefWidth="781.0" style="-fx-background-color: #4caf50;">
+         <children>
+            <ImageView fitHeight="59.0" fitWidth="62.0" layoutX="719.0" onMousePressed="#showSettings" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../Pictures/settings_32px.png" />
+               </image>
+            </ImageView>
+         </children>
+      </AnchorPane>
+      <AnchorPane layoutX="286.0" layoutY="59.0" prefHeight="616.0" prefWidth="781.0" style="-fx-background-color: #c8e6c9;" />
+   </children>
+</AnchorPane>

@@ -1,0 +1,122 @@
+Index: src/DataBase/DB.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>package DataBase;\r\n\r\n\r\nimport java.sql.Connection;\r\nimport java.sql.DriverManager;\r\nimport java.sql.Statement;\r\nimport java.util.Properties;\r\n\r\npublic class DB {\r\n    public static void main(String args[]) {\r\n        Properties prop = new Properties();\r\nString username = prop.getProperty(\"Login\", \"sa\");\r\nString password = prop.getProperty(\"Password\", \"123456\");\r\nString URL = prop.getProperty(\"URL\", \"jdbc:sqlserver://localhost:1433;databaseName=CanteenDB\");\r\n\r\n        try {\r\n\r\n            Class.forName(\"com.microsoft.sqlserver.jdbc.SQLServerDriver\");\r\n\r\n            Connection con = DriverManager.getConnection(\"jdbc:sqlserver://localhost:1433;databaseName=sample\", \"sa\", \"123456\");\r\n\r\n            Statement stmt = con.createStatement();\r\n\r\n            int rows = stmt.executeUpdate(\"INSERT INTO project VALUES ('a1','Venus',56987)\");\r\n\r\n            System.out.println(\"number of rows affected = \" + rows);\r\n\r\n            con.close();\r\n\r\n        } catch (Exception e) {\r\n            e.printStackTrace();\r\n        }\r\n    }//\r\n}\r\n
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- src/DataBase/DB.java	(revision f915379124da4b02cedce2603b8114fc3256be0f)
++++ src/DataBase/DB.java	(date 1587116291342)
+@@ -9,15 +9,15 @@
+ public class DB {
+     public static void main(String args[]) {
+         Properties prop = new Properties();
+-String username = prop.getProperty("Login", "sa");
+-String password = prop.getProperty("Password", "123456");
+-String URL = prop.getProperty("URL", "jdbc:sqlserver://localhost:1433;databaseName=CanteenDB");
++    String username = prop.getProperty("Login", "sa");
++    String password = prop.getProperty("Password", "123456");
++    String URL = prop.getProperty("URL", "jdbc:sqlserver://localhost:1433;databaseName=CanteenDB");
+ 
+         try {
+ 
+             Class.forName("com.microsoft.sqlserver.jdbc.SQLServerDriver");
+ 
+-            Connection con = DriverManager.getConnection("jdbc:sqlserver://localhost:1433;databaseName=sample", "sa", "123456");
++            Connection con = DriverManager.getConnection(URL, username, password);
+ 
+             Statement stmt = con.createStatement();
+ 
+@@ -30,5 +30,5 @@
+         } catch (Exception e) {
+             e.printStackTrace();
+         }
+-    }//
++    }
+ }
+Index: src/GUI/Main.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>package GUI;\r\n\r\nimport javafx.application.Application;\r\nimport javafx.fxml.FXMLLoader;\r\nimport javafx.scene.Parent;\r\nimport javafx.scene.Scene;\r\nimport javafx.stage.Stage;\r\n\r\npublic class Main extends Application {\r\n\r\n\r\n    public static void main(String[] args) {\r\n        launch(args);\r\n    }\r\n\r\n    @Override\r\n    public void start(Stage primaryStage) throws Exception {\r\n\r\n        try {\r\n            Parent root = FXMLLoader.load(getClass().getResource(\"sample.fxml\"));\r\n            primaryStage.setTitle(\"ECCO Canteen\");\r\n            primaryStage.setScene(new Scene(root, 300, 275));\r\n            primaryStage.show();\r\n\r\n        } catch (Exception e) {\r\n            e.printStackTrace();\r\n        }\r\n\r\n\r\n    }\r\n}\r\n
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- src/GUI/Main.java	(revision f915379124da4b02cedce2603b8114fc3256be0f)
++++ src/GUI/Main.java	(date 1587118563235)
+@@ -28,4 +28,4 @@
+ 
+ 
+     }
+-}
++}
+\ No newline at end of file
+Index: .idea/misc.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+><?xml version=\"1.0\" encoding=\"UTF-8\"?>\r\n<project version=\"4\">\r\n  <component name=\"ProjectKey\">\r\n    <option name=\"state\" value=\"project://e79810c8-c5c8-43b1-b19c-90c1f4095425\" />\r\n  </component>\r\n  <component name=\"ProjectRootManager\" version=\"2\" languageLevel=\"JDK_11\" default=\"true\" project-jdk-name=\"11\" project-jdk-type=\"JavaSDK\">\r\n    <output url=\"file://$PROJECT_DIR$/out\" />\r\n  </component>\r\n</project>
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- .idea/misc.xml	(revision f915379124da4b02cedce2603b8114fc3256be0f)
++++ .idea/misc.xml	(date 1587116717932)
+@@ -3,7 +3,7 @@
+   <component name="ProjectKey">
+     <option name="state" value="project://e79810c8-c5c8-43b1-b19c-90c1f4095425" />
+   </component>
+-  <component name="ProjectRootManager" version="2" languageLevel="JDK_11" default="true" project-jdk-name="11" project-jdk-type="JavaSDK">
++  <component name="ProjectRootManager" version="2" languageLevel="JDK_1_8" default="false" project-jdk-name="11" project-jdk-type="JavaSDK">
+     <output url="file://$PROJECT_DIR$/out" />
+   </component>
+ </project>
+\ No newline at end of file
+Index: .idea/libraries/lib.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- .idea/libraries/lib.xml	(date 1587121183340)
++++ .idea/libraries/lib.xml	(date 1587121183340)
+@@ -0,0 +1,13 @@
++<component name="libraryTable">
++  <library name="lib">
++    <CLASSES>
++      <root url="file://$PROJECT_DIR$/../lib" />
++    </CLASSES>
++    <JAVADOC />
++    <SOURCES>
++      <root url="file://$PROJECT_DIR$/../lib" />
++    </SOURCES>
++    <jarDirectory url="file://$PROJECT_DIR$/../lib" recursive="false" />
++    <jarDirectory url="file://$PROJECT_DIR$/../lib" recursive="false" type="SOURCES" />
++  </library>
++</component>
+\ No newline at end of file
+Index: D19-Project-JDBC.iml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+><?xml version=\"1.0\" encoding=\"UTF-8\"?>\r\n<module type=\"JAVA_MODULE\" version=\"4\">\r\n  <component name=\"NewModuleRootManager\" inherit-compiler-output=\"true\">\r\n    <exclude-output />\r\n    <content url=\"file://$MODULE_DIR$\">\r\n      <sourceFolder url=\"file://$MODULE_DIR$/src\" isTestSource=\"false\" />\r\n    </content>\r\n    <orderEntry type=\"inheritedJdk\" />\r\n    <orderEntry type=\"sourceFolder\" forTests=\"false\" />\r\n  </component>\r\n</module>\r\n\r\n
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- D19-Project-JDBC.iml	(revision f915379124da4b02cedce2603b8114fc3256be0f)
++++ D19-Project-JDBC.iml	(date 1587121183294)
+@@ -1,12 +1,14 @@
+ <?xml version="1.0" encoding="UTF-8"?>
+ <module type="JAVA_MODULE" version="4">
+-  <component name="NewModuleRootManager" inherit-compiler-output="true">
++  <component name="NewModuleRootManager" LANGUAGE_LEVEL="JDK_11">
++    <output url="file://$MODULE_DIR$/out/production/D19-Project-JDBC" />
++    <output-test url="file://$MODULE_DIR$/out/test/D19-Project-JDBC" />
+     <exclude-output />
+     <content url="file://$MODULE_DIR$">
+       <sourceFolder url="file://$MODULE_DIR$/src" isTestSource="false" />
+     </content>
+     <orderEntry type="inheritedJdk" />
+     <orderEntry type="sourceFolder" forTests="false" />
++    <orderEntry type="library" name="lib" level="project" />
+   </component>
+-</module>
+-
++</module>
+\ No newline at end of file
+diff --git src/GUI/sample.fxml src/GUI/sample.fxml

@@ -1,0 +1,56 @@
+Index: src/DataBase/DB.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>package DataBase;\r\n\r\n\r\nimport java.io.FileInputStream;\r\nimport java.io.InputStream;\r\nimport java.sql.*;\r\nimport java.util.Properties;\r\n\r\nimport java.io.FileInputStream;\r\n\r\nimport java.sql.*;\r\nimport java.util.Properties;\r\nimport java.util.concurrent.ExecutionException;\r\n\r\npublic class DB {\r\n    private static Properties prop;\r\n    private static String UN;\r\n    private static String PSW;\r\n    private static String DBname;\r\n    private static String URL;\r\n    private static String Port;\r\n    private static String NOMOREDATA;\r\n    private static final String Filename = \"ABSOLUTE PATH TO DB PROPERTIES FILE\";\r\n    private static Connection con;\r\n    private static boolean finished = false;\r\n    //For ResultSet boolean value\r\n    private static boolean MoreData= false;\r\n    //Indicator of actual progress in SQL\r\n    private static boolean inProgress= false;\r\n    private static int StartingColumns = 1;\r\n    private static int NewCurrentColumns;\r\n    private static ResultSet rs;\r\n    private static PreparedStatement ps;\r\n\r\n    static{\r\n\r\n\r\n            try {\r\n                prop = new Properties();\r\n                FileInputStream input = new FileInputStream(Filename);\r\n                prop.load(input);\r\n                Class.forName(\"com.microsoft.sqlserver.jdbc.SQLServerDriver\");\r\n                UN = prop.getProperty(\"Username\" );\r\n                PSW = prop.getProperty(\"Password\");\r\n                URL = prop.getProperty(\"URL\", \"jdbc:sqlserver://localhost:1433;databaseName=CanteenDB\");\r\n                Port = prop.getProperty(\"Port\",\"1433\");\r\n                DBname = prop.getProperty(\"Dbname\");\r\n            } catch (Exception e) {\r\n                e.printStackTrace();\r\n            }\r\n        }\r\n        public static void ConnectDB() throws SQLException{\r\n            try {\r\n                con = DriverManager.getConnection(\"jdbc:sqlserver://localhost:\" + 1433 + \";databaseName=\" +DBname, UN, PSW);\r\n            }catch (SQLException sq){\r\n                sq.getErrorCode();\r\n            }\r\n        } public static void Disconnect() throws SQLException{\r\n            try {\r\n                con.close();\r\n            }catch (SQLException sq){\r\n                sq.getErrorCode();\r\n            }\r\n        }\r\n        public static void SelectData(String SqlQuery) throws SQLException {\r\n            if(finished){\r\n                System.exit(0);}\r\n            try {\r\n                if(rs!=null){\r\n                    rs.close();\r\n                }\r\n                if(ps!=null){\r\n                    ps.close();\r\n                }\r\n                ConnectDB();\r\n                inProgress = true;\r\n                ps = con.prepareStatement(SqlQuery);\r\n                rs = ps.executeQuery();\r\n                MoreData = rs.next();\r\n                ResultSetMetaData rsmd = rs.getMetaData();\r\n                NewCurrentColumns = rsmd.getColumnCount();\r\n            }catch (Exception e){\r\n                e.printStackTrace();\r\n            }\r\n\r\n        }\r\n        public static String ShowData()throws SQLException{\r\n            StringBuilder sb = new StringBuilder();\r\n            //Get number of columns\r\n            try{\r\n\r\n                while(MoreData){\r\n                    sb.append(rs.getString(StartingColumns));\r\n                    if(StartingColumns>=NewCurrentColumns){\r\n                        StartingColumns = 1;\r\n                        sb.append(\"\\n\");\r\n                        MoreData = rs.next();\r\n                    }\r\n                    else{\r\n                        StartingColumns++;\r\n                        sb.append(\"\\n\");\r\n                    }\r\n                }\r\n            }catch (Exception x){\r\n                x.printStackTrace();\r\n            }finally {\r\n                MoreData = false;\r\n                rs.close();\r\n                ps.close();\r\n                Disconnect();\r\n            }\r\n            return sb.toString();\r\n\r\n        }\r\n        public static void Queries(String SQL) throws SQLException{\r\n            if(ps!=null){\r\n                ps.close();\r\n            }\r\n            try{\r\n                ConnectDB();\r\n                ps = con.prepareStatement(SQL);\r\n                int rows = ps.executeUpdate();\r\n                System.out.println(\"Rows affected: \"+ rows);\r\n\r\n            }catch (Exception e){\r\n                e.printStackTrace();\r\n            }finally {\r\n                Disconnect();\r\n            }\r\n        }\r\n\r\n        public static void InsertSQL(String SQL) throws SQLException { Queries(SQL);}\r\n    }\r\n\r\n\r\n
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- src/DataBase/DB.java	(revision fc9fdd45a0a3b1b5e4805787b8c1a582e523ddb5)
++++ src/DataBase/DB.java	(date 1587381274631)
+@@ -76,7 +76,7 @@
+                 inProgress = true;
+                 ps = con.prepareStatement(SqlQuery);
+                 rs = ps.executeQuery();
+-                MoreData = rs.next();
++                inProgress = rs.next();
+                 ResultSetMetaData rsmd = rs.getMetaData();
+                 NewCurrentColumns = rsmd.getColumnCount();
+             }catch (Exception e){
+@@ -89,7 +89,7 @@
+             //Get number of columns
+             try{
+ 
+-                while(MoreData){
++                while(inProgress){
+                     sb.append(rs.getString(StartingColumns));
+                     if(StartingColumns>=NewCurrentColumns){
+                         StartingColumns = 1;
+@@ -101,8 +101,8 @@
+                         sb.append("\n");
+                     }
+                 }
+-            }catch (Exception x){
+-                x.printStackTrace();
++            }catch (SQLException x){
++                System.out.println("NO PREVIOUS SQL STATEMENT");
+             }finally {
+                 MoreData = false;
+                 rs.close();
+Index: src/GUI/LogIn.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>package GUI;\r\n\r\nimport javafx.application.Application;\r\nimport javafx.geometry.Insets;\r\nimport javafx.scene.Scene;\r\nimport javafx.scene.control.Button;\r\nimport javafx.scene.control.Label;\r\nimport javafx.scene.control.TextField;\r\nimport javafx.scene.image.Image;\r\nimport javafx.scene.image.ImageView;\r\nimport javafx.scene.layout.BorderPane;\r\nimport javafx.scene.layout.GridPane;\r\nimport javafx.stage.Stage;\r\n\r\npublic class LogIn extends Application {\r\n\r\n    Stage Window;\r\n    @Override\r\n    public void start(Stage stage) throws Exception {\r\n    Window = stage;\r\n        GridPane grid = new GridPane();\r\n        grid.setPadding(new Insets(10,10,10,10));\r\n        grid.setVgap(8);\r\n        grid.setHgap(10);\r\n        Label Username = new Label(\"Username\");\r\n        GridPane.setConstraints(Username,0,0);\r\n        TextField NameInput = new TextField();\r\n        NameInput.setPromptText(\"Username\");\r\n        GridPane.setConstraints(NameInput,1,0);\r\n        Label PassLabel = new Label(\"Password\");\r\n        GridPane.setConstraints(PassLabel,0,1);\r\n        TextField PassInput = new TextField();\r\n        PassInput.setPromptText(\"*******\");\r\n        GridPane.setConstraints(PassInput,1,1);\r\n        Button LoginButton = new Button(\"Log in\");\r\n        GridPane.setConstraints(LoginButton,1,2);\r\n        Image Logojpg = new Image(\"Pictures/pasted image 0.png\");\r\n        ImageView LogoView = new ImageView(Logojpg);\r\n        LogoView.setFitHeight(150);\r\n        LogoView.setFitWidth(70);\r\n        GridPane.setConstraints(LogoView,3,0);\r\n        BorderPane MainView = new BorderPane();\r\n        MainView.setLeft(grid);\r\n        MainView.setRight(LogoView);\r\n        grid.getChildren().addAll(Username,NameInput,PassInput,PassLabel,LoginButton);\r\n        Scene scene = new Scene(MainView,350,300);\r\n        Window.setScene(scene);\r\n        Window.setTitle(\"Log in\");\r\n        Window.show();\r\n    }\r\n}\r\n
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- src/GUI/LogIn.java	(revision fc9fdd45a0a3b1b5e4805787b8c1a582e523ddb5)
++++ src/GUI/LogIn.java	(date 1587380711671)
+@@ -12,7 +12,7 @@
+ import javafx.scene.layout.GridPane;
+ import javafx.stage.Stage;
+ 
+-public class LogIn extends Application {
++public class LogIn extends Main{
+ 
+     Stage Window;
+     @Override

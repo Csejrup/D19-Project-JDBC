@@ -1,0 +1,16 @@
+Index: src/DataBase/DB.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>package DataBase;\r\n\r\n\r\nimport java.sql.Connection;\r\nimport java.sql.DriverManager;\r\nimport java.sql.Statement;\r\nimport java.util.Properties;\r\n\r\npublic class DB {\r\n    public static void main(String args[]) {\r\n        Properties prop = new Properties();\r\nString username = prop.getProperty(\"Login\", \"sa\");\r\nString password = prop.getProperty(\"Password\", \"123456\");\r\nString URL = prop.getProperty(\"URL\", \"jdbc:sqlserver://localhost:1433;databaseName=CanteenDB\");\r\n\r\n        try {\r\n\r\n            Class.forName(\"com.microsoft.sqlserver.jdbc.SQLServerDriver\");\r\n\r\n            Connection con = DriverManager.getConnection(\"jdbc:sqlserver://localhost:1433;databaseName=sample\", \"sa\", \"123456\");\r\n\r\n            Statement stmt = con.createStatement();\r\n\r\n            int rows = stmt.executeUpdate(\"INSERT INTO project VALUES ('a1','Venus',56987)\");\r\n\r\n            System.out.println(\"number of rows affected = \" + rows);\r\n\r\n            con.close();\r\n\r\n        } catch (Exception e) {\r\n            e.printStackTrace();\r\n        }\r\n    }\r\n}\r\n
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- src/DataBase/DB.java	(revision 97be044ec116173a34d681bf0abd40b85978dd7b)
++++ src/DataBase/DB.java	(date 1587116098785)
+@@ -30,5 +30,5 @@
+         } catch (Exception e) {
+             e.printStackTrace();
+         }
+-    }
++    }//
+ }
