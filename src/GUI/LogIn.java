@@ -12,7 +12,7 @@ import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
 import javafx.stage.Stage;
 
-public class LogIn extends Application {
+public class LogIn extends Main{
 
     Stage Window;
     @Override
