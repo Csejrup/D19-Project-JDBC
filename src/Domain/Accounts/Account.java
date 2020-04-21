@@ -5,7 +5,7 @@ public class Account {
     private String _PASSWORD;
     private boolean _LOGINSTATUS;
 
-
+    private String NAME;
 
     public boolean verifyLogin(){
 
