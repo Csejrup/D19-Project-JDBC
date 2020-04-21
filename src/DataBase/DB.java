@@ -133,7 +133,7 @@ public class DB {
         if (terminated){
             System.exit(0);
         }
-        if (!pendingData){
+        if (!pendingData){  
             terminated=true;
             throw new RuntimeException("ERROR! No previous select, communication with the database is lost!");
         }else if (!moreData){
