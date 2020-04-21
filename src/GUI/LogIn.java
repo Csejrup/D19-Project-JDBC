@@ -48,4 +48,5 @@ public class LogIn extends Main{
         Window.setTitle("Log in");
         Window.show();
     }
+
 }
