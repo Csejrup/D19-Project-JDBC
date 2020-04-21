@@ -82,7 +82,6 @@ public class DB {
             }catch (Exception e){
                 e.printStackTrace();
             }
-
         }
         public static String ShowData()throws SQLException{
             StringBuilder sb = new StringBuilder();
